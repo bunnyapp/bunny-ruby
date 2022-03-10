@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     recurcrm (0.0.1)
-      httparty (~> 0.13)
-      json (~> 2.3)
+      httparty (~> 0.20)
+      json (~> 2.6)
 
 GEM
   remote: https://rubygems.org/
