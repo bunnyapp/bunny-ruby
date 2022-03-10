@@ -29,7 +29,7 @@ You can use this gem to send customized graphql queries to Recur or use the buil
 First configure the Recur client.
 
 ```ruby
-require 'recurcrm'
+require 'recur_crm'
 RecurCrm.config do |c|
   c.api_key = 'API_KEY_HERE' # Don't commit your key to source control!
   c.base_uri = 'https://api.recurcrm.com' # optional. This is the default
