@@ -36,6 +36,14 @@ RecurCrm.config do |c|
 end
 ```
 
+### Generate rails config
+
+Create a config file at `config/initializers/recur_crm.rb`
+
+```sh
+> bin/rails g recur_crm:install
+```
+
 ### Track feature usage
 
 If you have usage based billing or just want to track feature usage then use this method.
