@@ -90,6 +90,20 @@ variables = {
 json_response = RecurCrm.query(query, variables)
 ```
 
-### Requirements
+## Requirements
 
 This gem requires Ruby 2.5+
+
+## Development
+
+Run `bin/setup` to install dependencies.
+
+Run `rake spec` to run the tests.
+
+You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+Set IGNORE_SSL when running locally to ignore ssl warnings.
+
+```sh
+> IGNORE_SSL=true bin/console
+```
