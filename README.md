@@ -42,10 +42,12 @@ If you have usage based billing or just want to track feature usage then use thi
 
 ```ruby
 # Usage is tracked as if it just happened
-json_response = RecurCrm::Usage.track(quantity: 5, feature_code: 'products', environment_code: '2')
+json_response = RecurCrm::Usage.track(
+  quantity: 5, feature_code: 'products', environment_code: '2')
 
 # Usage is tracked using the date supplied
-json_response = RecurCrm::Usage.track(quantity: 5, feature_code: 'products', environment_code: '2', usage_at: '2022-03-10')
+json_response = RecurCrm::Usage.track(
+  quantity: 5, feature_code: 'products', environment_code: '2', usage_at: '2022-03-10')
 ```
 
 ### Custom query
