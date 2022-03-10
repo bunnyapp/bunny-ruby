@@ -1,6 +1,8 @@
 require 'recur_crm/version'
 require 'recur_crm/client'
 require 'recur_crm/usage'
+require 'recur_crm/platform'
+require 'recur_crm/environment'
 
 module RecurCrm
   class << self

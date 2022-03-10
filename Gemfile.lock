@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    recurcrm (1.0.1)
+    recur_crm (1.0.4)
       httparty (~> 0.20)
       json (~> 2.6)
 
@@ -64,7 +64,7 @@ PLATFORMS
 DEPENDENCIES
   fakeweb (~> 1.3)
   rake (~> 13.0)
-  recurcrm!
+  recur_crm!
   rspec (~> 3.6)
   rubocop (~> 1.26)
   rubocop-performance (~> 1.13)
