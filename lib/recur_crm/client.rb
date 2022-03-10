@@ -37,7 +37,6 @@ module RecurCrm
     end
 
     def verify_ssl
-      puts ENV['IGNORE_SSL']
       return true unless ENV['IGNORE_SSL']
     end
   end
