@@ -52,7 +52,7 @@ json_response = RecurCrm::Usage.track(
 
 ### Custom query
 
-Alternately you can send your own query like this
+Alternately you can build and send your own custom graphql queries or mutations
 
 ```ruby
 query = <<-'GRAPHQL'
