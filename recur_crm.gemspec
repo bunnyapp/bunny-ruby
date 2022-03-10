@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'recur_crm/version'
 
 Gem::Specification.new do |spec|
-  spec.name                   = 'recurcrm'
+  spec.name                   = 'recur_crm'
   spec.version                = RecurCrm::VERSION
   spec.authors                = ['Recur CRM', 'Rich Chetwynd']
   spec.email                  = ['support@recurcrm.com']
