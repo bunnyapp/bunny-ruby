@@ -50,7 +50,7 @@ json_response = RecurCrm::Usage.track(
   quantity: 5, feature_code: 'products', environment_code: '2', usage_at: '2022-03-10')
 ```
 
-### Custom query
+### Custom queries & mutations
 
 Alternately you can build and send your own custom graphql queries or mutations
 
