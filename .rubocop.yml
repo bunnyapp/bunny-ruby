@@ -1,0 +1,34 @@
+# Please keep this in ALPHABETICAL order
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.5
+  SuggestExtensions: false
+  Exclude:
+    - "bin/*"
+    - "spec/**/*.rb"
+    - "*.md"
+
+Layout/LineLength:
+  Max: 136
+
+Metrics/AbcSize:
+  Max: 57
+
+Metrics/BlockLength:
+  Max: 36
+  Exclude:
+    - spec/**/*.rb
+    - lokalise_rails.gemspec
+
+Metrics/MethodLength:
+  Max: 30
+
+Naming/PredicateName:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
