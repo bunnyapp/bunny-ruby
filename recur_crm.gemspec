@@ -22,7 +22,8 @@ Gem::Specification.new do |spec|
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
   spec.metadata['rubygems_mfa_required'] = 'true'
 
-  spec.files = Dir['README.md', 'LICENSE', 'CHANGELOG.md', 'lib/**/*.rb', 'lib/**/*.rake',
+  spec.files = Dir['README.md', 'LICENSE', 'CHANGELOG.md', 'generators/**/*.rb',
+                   'lib/**/*.rb', 'lib/**/*.rake',
                    'recur_crm.gemspec', 'Gemfile', 'Rakefile']
 
   spec.executables   = []
