@@ -13,7 +13,7 @@ module RecurCrm
             # This is where your API key goes. You should almost certainly not have it
             # committed to source control, but instead load it from a secret store.
             # Default: nil
-            c.api_key = ENV['RECURCRM_API_TOKEN']
+            c.api_key = ENV['RECUR_CRM_API_TOKEN']
 
             # Optional. Base URI for the Recur API
             # c.base_uri = 'https://api.recurcrm.com'
