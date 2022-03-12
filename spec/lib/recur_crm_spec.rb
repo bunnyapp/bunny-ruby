@@ -11,10 +11,16 @@ describe RecurCrm do
       expect(fake_class).to receive(:api_key=).with('xxx')
       fake_class.api_key = 'xxx'
     end
+  end
 
-    it 'is possible to set base_uri' do
-      expect(fake_class).to receive(:base_uri=).with('http://example.com')
-      fake_class.base_uri = 'http://example.com'
+  describe 'query' do
+    it 'should return a json string response' do
+      res = RecurCrm.query("graphql query", { variable: 1 })
+      expect(res).to eq("{}")
+    end
+
+    it 'should require query and variables arguments' do
+      expect { RecurCrm.query("graphql query") }.to raise_error(ArgumentError)
     end
   end
 end

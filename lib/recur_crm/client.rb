@@ -3,9 +3,11 @@ require 'json'
 
 module RecurCrm
   class Client
-    USER_AGENT = "RecurCrm Ruby v#{RecurCrm::VERSION}".freeze
-
     include HTTParty
+
+    attr_accessor :headers
+
+    USER_AGENT = "RecurCrm Ruby v#{RecurCrm::VERSION}".freeze
 
     def initialize
       self.class.base_uri RecurCrm.base_uri
