@@ -27,7 +27,16 @@ module RecurCrm
         variables: variables
       }.to_json
 
-      self.class.post('/graphql', headers: @headers, body: body).body
+      res = self.class.post('/graphql', headers: @headers, body: body)
+
+      case res.code.to_s
+      when /2[0-9][0-9]/ # HTTP 2xx
+        res.body
+      when /40[13]/ # HTTP 401,403
+        raise AuthorizationError, res.body
+      else
+        raise ResponseError, res.body # HTTP 400, 500 etc
+      end
     end
 
     # Performs the api request within a new Thread, so it is non blocking.

@@ -1,4 +1,5 @@
 require 'recur_crm/version'
+require 'recur_crm/errors'
 require 'recur_crm/client'
 require 'recur_crm/usage'
 require 'recur_crm/platform'

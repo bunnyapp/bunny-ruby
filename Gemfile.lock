@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    recur_crm (1.1.0)
+    recur_crm (1.2.0)
       httparty (~> 0.20)
       json (~> 2.6)
 
