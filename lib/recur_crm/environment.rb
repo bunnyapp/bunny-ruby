@@ -18,12 +18,13 @@ module RecurCrm
     }
     GRAPHQL
 
-    def self.create(name:, code:, platform_code: 'default')
+    def self.create(name:, code:, platform_code: 'default', subscription_id: nil)
       variables = {
         attributes: {
           name: name,
           code: code,
-          platformCode: platform_code
+          platformCode: platform_code,
+          subscriptionId: subscription_id
         }
       }
 
