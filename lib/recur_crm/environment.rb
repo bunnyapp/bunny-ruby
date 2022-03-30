@@ -23,10 +23,11 @@ module RecurCrm
         attributes: {
           name: name,
           code: code,
-          platformCode: platform_code,
-          subscriptionId: subscription_id
+          platformCode: platform_code
         }
       }
+
+      variables[:subscriptionId] = subscription_id unless subscription_id.nil?
 
       Client.new.query(@environment_create_mutation, variables)
     end
