@@ -1,8 +1,8 @@
 module RecurCrm
   class Environment
     @environment_create_mutation = <<-'GRAPHQL'
-    mutation environmentCreate ($attributes: EnvironmentAttributes!) {
-      environmentCreate (attributes: $attributes) {
+    mutation environmentCreate ($attributes: EnvironmentAttributes!, $subscriptionId: ID!) {
+      environmentCreate (attributes: $attributes, subscriptionId: $subscriptionId) {
         environment {
           code
           id
@@ -24,10 +24,9 @@ module RecurCrm
           name: name,
           code: code,
           platformCode: platform_code
-        }
+        },
+        subscriptionId: subscription_id
       }
-
-      variables[:subscriptionId] = subscription_id unless subscription_id.nil?
 
       Client.new.query(@environment_create_mutation, variables)
     end
