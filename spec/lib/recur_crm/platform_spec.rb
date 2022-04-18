@@ -1,4 +1,4 @@
-describe RecurCrm::Platform do
+describe BunnyCrm::Platform do
   describe 'create' do
     it 'should return a json result' do
       res = described_class.create(name: 'Name', code: 'code')

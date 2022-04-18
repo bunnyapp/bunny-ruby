@@ -1,13 +1,13 @@
-# recur-ruby
+# bunny-ruby
 
-Ruby SDK for Recur CRM
+Ruby SDK for Bunny CRM
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'recurcrm'
+gem 'bunnycrm'
 ```
 
 And then execute:
@@ -19,29 +19,29 @@ $ bundle
 Or install it yourself as:
 
 ```sh
-$ gem install recurcrm
+$ gem install bunnycrm
 ```
 
 ## Getting Started
 
-You can use this gem to send customized graphql queries to Recur or use the built in convience methods.
+You can use this gem to send customized graphql queries to Bunny or use the built in convience methods.
 
-First configure the Recur client.
+First configure the Bunny client.
 
 ```ruby
-require 'recur_crm'
-RecurCrm.config do |c|
+require 'bunny_crm'
+BunnyCrm.config do |c|
   c.api_key = 'API_KEY_HERE' # Don't commit your key to source control!
-  c.base_uri = 'https://api.recurcrm.com' # optional. This is the default
+  c.base_uri = 'https://api.bunny.com' # optional. This is the default
 end
 ```
 
 ### Generate rails config
 
-Create a config file at `config/initializers/recur_crm.rb`
+Create a config file at `config/initializers/bunny_crm.rb`
 
 ```sh
-> bin/rails g recur_crm:install
+> bin/rails g bunny_crm:install
 ```
 
 ### Track feature usage
@@ -50,11 +50,11 @@ If you have usage based billing or just want to track feature usage then use thi
 
 ```ruby
 # Usage is tracked as if it just happened
-json_response = RecurCrm::Usage.track(
+json_response = BunnyCrm::Usage.track(
   quantity: 5, feature_code: 'products', environment_code: '2')
 
 # Usage is tracked using the date supplied
-json_response = RecurCrm::Usage.track(
+json_response = BunnyCrm::Usage.track(
   quantity: 5, feature_code: 'products', environment_code: '2', usage_at: '2022-03-10')
 ```
 
@@ -95,7 +95,7 @@ variables = {
   }
 }
 
-json_response = RecurCrm.query(query, variables)
+json_response = BunnyCrm.query(query, variables)
 ```
 
 ## Requirements

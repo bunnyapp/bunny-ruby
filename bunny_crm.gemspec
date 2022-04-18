@@ -1,16 +1,16 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'recur_crm/version'
+require 'bunny_crm/version'
 
 Gem::Specification.new do |spec|
-  spec.name                   = 'recur_crm'
-  spec.version                = RecurCrm::VERSION
-  spec.authors                = ['Recur CRM', 'Rich Chetwynd']
-  spec.email                  = ['support@recurcrm.com']
+  spec.name                   = 'bunny_crm'
+  spec.version                = BunnyCrm::VERSION
+  spec.authors                = ['Bunny CRM', 'Rich Chetwynd']
+  spec.email                  = ['support@bunny.com']
 
-  spec.summary                = 'Ruby SDK for Recur CRM'
-  spec.description            = 'Use Recur for SaaS subscription management, quoting, billing and CRM'
-  spec.homepage               = 'https://github.com/recurcrm/recur-ruby'
+  spec.summary                = 'Ruby SDK for Bunny CRM'
+  spec.description            = 'Use Bunny for SaaS subscription management, quoting, billing and CRM'
+  spec.homepage               = 'https://github.com/recurcrm/bunny-ruby'
   spec.license                = 'MIT'
   spec.platform               = Gem::Platform::RUBY
   spec.required_ruby_version  = '>= 2.5.0'
@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir['README.md', 'LICENSE', 'CHANGELOG.md', 'generators/**/*.rb',
                    'lib/**/*.rb', 'lib/**/*.rake',
-                   'recur_crm.gemspec', 'Gemfile', 'Rakefile']
+                   'bunny_crm.gemspec', 'Gemfile', 'Rakefile']
 
   spec.executables   = []
   spec.require_paths = ['lib']

@@ -1,4 +1,4 @@
-module RecurCrm
+module BunnyCrm
   class AuthorizationError < StandardError
   end
 

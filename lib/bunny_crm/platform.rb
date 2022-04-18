@@ -1,4 +1,4 @@
-module RecurCrm
+module BunnyCrm
   class Platform
     @platform_create_mutation = <<-'GRAPHQL'
     mutation platformCreate ($attributes: PlatformAttributes!) {

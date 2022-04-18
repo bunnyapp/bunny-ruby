@@ -1,11 +1,11 @@
-require 'recur_crm/version'
-require 'recur_crm/errors'
-require 'recur_crm/client'
-require 'recur_crm/usage'
-require 'recur_crm/platform'
-require 'recur_crm/environment'
+require 'bunny_crm/version'
+require 'bunny_crm/errors'
+require 'bunny_crm/client'
+require 'bunny_crm/usage'
+require 'bunny_crm/platform'
+require 'bunny_crm/environment'
 
-module RecurCrm
+module BunnyCrm
   class << self
     attr_accessor :api_key
     attr_writer :base_uri
@@ -15,7 +15,7 @@ module RecurCrm
     end
 
     def base_uri
-      @base_uri || 'https://api.recurcrm.com'
+      @base_uri || 'https://api.bunny.com'
     end
 
     def query(query, variables)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-describe RecurCrm do
+describe BunnyCrm do
   it 'returns a proper version' do
-    expect(RecurCrm::VERSION).to be_a(String)
+    expect(BunnyCrm::VERSION).to be_a(String)
   end
 end

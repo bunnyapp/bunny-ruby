@@ -1,11 +1,11 @@
 require 'fakeweb'
 
-require_relative '../lib/recur_crm'
-require_relative '../lib/recur_crm/version'
+require_relative '../lib/bunny_crm'
+require_relative '../lib/bunny_crm/version'
 
 FakeWeb.register_uri(:post, "http://example.com/graphql", :body => "{}")
 
-RecurCrm.config do |c|
+BunnyCrm.config do |c|
   c.api_key = 'xxx'
   c.base_uri = 'http://example.com'
 end

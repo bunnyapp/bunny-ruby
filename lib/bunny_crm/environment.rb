@@ -1,4 +1,4 @@
-module RecurCrm
+module BunnyCrm
   class Environment
     @environment_create_mutation = <<-'GRAPHQL'
     mutation environmentCreate ($attributes: EnvironmentAttributes!, $subscriptionId: ID!) {

@@ -1,4 +1,4 @@
-describe RecurCrm::Usage do
+describe BunnyCrm::Usage do
   describe 'track' do
     it 'should return a json result' do
       res = described_class.track(quantity: 1, feature_code: 'code', environment_code: 'code')
