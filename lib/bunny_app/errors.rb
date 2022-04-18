@@ -1,4 +1,4 @@
-module BunnyCrm
+module BunnyApp
   class AuthorizationError < StandardError
   end
 

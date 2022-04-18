@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-describe BunnyCrm do
+describe BunnyApp do
   it 'returns a proper version' do
-    expect(BunnyCrm::VERSION).to be_a(String)
+    expect(BunnyApp::VERSION).to be_a(String)
   end
 end

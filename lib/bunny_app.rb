@@ -1,11 +1,11 @@
-require 'bunny_crm/version'
-require 'bunny_crm/errors'
-require 'bunny_crm/client'
-require 'bunny_crm/usage'
-require 'bunny_crm/platform'
-require 'bunny_crm/environment'
+require 'bunny_app/version'
+require 'bunny_app/errors'
+require 'bunny_app/client'
+require 'bunny_app/usage'
+require 'bunny_app/platform'
+require 'bunny_app/environment'
 
-module BunnyCrm
+module BunnyApp
   class << self
     attr_accessor :api_key
     attr_writer :base_uri

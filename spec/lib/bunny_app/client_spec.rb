@@ -1,4 +1,4 @@
-describe BunnyCrm::Client do
+describe BunnyApp::Client do
   let!(:client) { described_class.new }
 
   describe 'headers' do
@@ -8,7 +8,7 @@ describe BunnyCrm::Client do
 
     it 'should include a user-agent header' do
       client = described_class.new
-      expect(client.headers).to include(match(/User-Agent/) => "BunnyCrm Ruby v#{BunnyCrm::VERSION}")
+      expect(client.headers).to include(match(/User-Agent/) => "BunnyApp Ruby v#{BunnyApp::VERSION}")
     end
   end
 end

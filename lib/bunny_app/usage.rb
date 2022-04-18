@@ -1,4 +1,4 @@
-module BunnyCrm
+module BunnyApp
   class Usage
     @feature_usage_create_mutation = <<-'GRAPHQL'
     mutation featureUsageCreate ($attributes: FeatureUsageAttributes!) {

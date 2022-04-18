@@ -1,13 +1,13 @@
 # bunny-ruby
 
-Ruby SDK for Bunny CRM
+Ruby SDK for Bunny
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'bunnycrm'
+gem 'bunnyapp'
 ```
 
 And then execute:
@@ -19,7 +19,7 @@ $ bundle
 Or install it yourself as:
 
 ```sh
-$ gem install bunnycrm
+$ gem install bunnyapp
 ```
 
 ## Getting Started
@@ -29,8 +29,8 @@ You can use this gem to send customized graphql queries to Bunny or use the buil
 First configure the Bunny client.
 
 ```ruby
-require 'bunny_crm'
-BunnyCrm.config do |c|
+require 'bunny_app'
+BunnyApp.config do |c|
   c.api_key = 'API_KEY_HERE' # Don't commit your key to source control!
   c.base_uri = 'https://api.bunny.com' # optional. This is the default
 end
@@ -38,10 +38,10 @@ end
 
 ### Generate rails config
 
-Create a config file at `config/initializers/bunny_crm.rb`
+Create a config file at `config/initializers/bunny_app.rb`
 
 ```sh
-> bin/rails g bunny_crm:install
+> bin/rails g bunny_app:install
 ```
 
 ### Track feature usage
@@ -50,11 +50,11 @@ If you have usage based billing or just want to track feature usage then use thi
 
 ```ruby
 # Usage is tracked as if it just happened
-json_response = BunnyCrm::Usage.track(
+json_response = BunnyApp::Usage.track(
   quantity: 5, feature_code: 'products', environment_code: '2')
 
 # Usage is tracked using the date supplied
-json_response = BunnyCrm::Usage.track(
+json_response = BunnyApp::Usage.track(
   quantity: 5, feature_code: 'products', environment_code: '2', usage_at: '2022-03-10')
 ```
 
@@ -95,7 +95,7 @@ variables = {
   }
 }
 
-json_response = BunnyCrm.query(query, variables)
+json_response = BunnyApp.query(query, variables)
 ```
 
 ## Requirements
