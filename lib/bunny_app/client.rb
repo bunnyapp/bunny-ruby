@@ -13,26 +13,56 @@ module BunnyApp
       self.class.base_uri BunnyApp.base_uri
       self.class.default_options.update(verify: verify_ssl)
 
-      @api_key = BunnyApp.api_key
+      BunnyApp.access_token ||= fetch_access_token
       @headers = {
         'User-Agent' => USER_AGENT,
         'Content-Type' => 'application/json',
-        'Authorization' => "Bearer #{BunnyApp.api_key}"
+        'Authorization' => "Bearer #{BunnyApp.access_token}"
       }
     end
 
-    def query(query, variables)
+    def fetch_access_token
+      body = URI.encode_www_form({
+                                   grant_type: 'client_credentials',
+                                   client_id: BunnyApp.client_id,
+                                   client_secret: BunnyApp.client_secret,
+                                   scope: BunnyApp.scope
+                                 })
+
+      headers = {
+        'Content-Type' => 'application/x-www-form-urlencoded'
+      }
+
+      res = self.class.post('/oauth/token', headers: headers, body: body)
+
+      raise AuthorizationError, 'Invalid api credentials' unless res.code == 200
+
+      BunnyApp.retryable = true
+      res['access_token']
+    end
+
+    def query(query, variables, retries = 0)
       body = {
         query: query,
         variables: variables
       }.to_json
+
+      @headers['Authorization'] = "Bearer #{BunnyApp.access_token}a"
 
       res = self.class.post('/graphql', headers: @headers, body: body)
 
       case res.code.to_s
       when /2[0-9][0-9]/ # HTTP 2xx
         res.body
-      when /40[13]/ # HTTP 401,403
+      when /401/ # Access Token Expired
+        raise AuthorizationError, 'Invalid access token' unless BunnyApp.retryable
+        raise AuthorizationError, 'Invalid api credentials' if retries >= 1
+
+        BunnyApp.access_token = fetch_access_token
+        retries += 1
+        query(query, variables, retries)
+
+      when /403/ # HTTP 403
         raise AuthorizationError, res.body
       else
         raise ResponseError, res.body # HTTP 400, 500 etc

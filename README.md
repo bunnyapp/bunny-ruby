@@ -30,11 +30,25 @@ First configure the Bunny client.
 
 ```ruby
 require 'bunny_app'
+
+# We recommend using the client_id/secret of your Bunny client app
+# this will enable automatic retries when the access token expires
 BunnyApp.config do |c|
-  c.api_key = 'API_KEY_HERE' # Don't commit your key to source control!
-  c.base_uri = 'https://api.bunny.com' # optional. This is the default
+  c.client_id = 'xxx'
+  c.client_secret = 'xxx'
+  c.scope = 'standard:read standard:write'
+  c.base_uri = 'https://<subdomain>.bunny.com'
+end
+
+# Alternately you can generate the access token outside of this sdk
+# be aware that if your access_token expires an exception will be raised
+BunnyApp.config do |c|
+  c.access_token = 'xxx'
+  c.base_uri = 'https://<subdomain>.bunny.com'
 end
 ```
+
+> Remember! Don't commit secrets to source control!
 
 ### Generate rails config
 
