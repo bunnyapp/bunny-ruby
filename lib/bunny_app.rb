@@ -7,7 +7,7 @@ require 'bunny_app/environment'
 
 module BunnyApp
   class << self
-    attr_accessor :api_key
+    attr_accessor :client_id, :client_secret, :scope, :access_token, :retryable
     attr_writer :base_uri
 
     def config

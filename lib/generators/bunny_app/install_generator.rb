@@ -10,13 +10,18 @@ module BunnyApp
           # Specifies configuration options for the Bunny gem.
           BunnyApp.config do |c|
 
-            # This is where your API key goes. You should almost certainly not have it
+            # This is where your API credentials go. You should almost certainly not have it
             # committed to source control, but instead load it from a secret store.
-            # Default: nil
-            c.api_key = ENV['bunny_app_API_TOKEN']
+            c.client_id = ENV['BUNNY_APP_CLIENT_ID']
+            c.client_secret = ENV['BUNNY_APP_CLIENT_SECRET']
+            c.scope = ENV['BUNNY_APP_SCOPE']
 
-            # Optional. Base URI for the Bunny API
-            # c.base_uri = 'https://api.bunny.com'
+            # Base URI for the Bunny API
+            c.base_uri = 'https://<subdomain>.bunny.com'
+
+            # Optional.
+            # Use this instead of client_id/secret if you dont care about the token expiring
+            # c.access_token = ENV['BUNNY_APP_ACCESS_TOKEN']
 
           end
         CONFIG

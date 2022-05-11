@@ -31,8 +31,8 @@ First configure the Bunny client.
 ```ruby
 require 'bunny_app'
 BunnyApp.config do |c|
-  c.api_key = 'API_KEY_HERE' # Don't commit your key to source control!
-  c.base_uri = 'https://api.bunny.com' # optional. This is the default
+  c.access_token = 'ACCESS_TOKEN_HERE' # Don't commit your key to source control!
+  c.base_uri = 'https://<subdomain>.bunny.com'
 end
 ```
 

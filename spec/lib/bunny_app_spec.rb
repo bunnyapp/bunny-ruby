@@ -7,9 +7,9 @@ describe BunnyApp do
 
   describe 'parameters' do
     let(:fake_class) { class_double('BunnyApp') }
-    it 'is possible to set api_key' do
-      expect(fake_class).to receive(:api_key=).with('xxx')
-      fake_class.api_key = 'xxx'
+    it 'is possible to set access_token' do
+      expect(fake_class).to receive(:access_token=).with('xxx')
+      fake_class.access_token = 'xxx'
     end
   end
 
