@@ -47,7 +47,7 @@ module BunnyApp
         variables: variables
       }.to_json
 
-      @headers['Authorization'] = "Bearer #{BunnyApp.access_token}a"
+      @headers['Authorization'] = "Bearer #{BunnyApp.access_token}"
 
       res = self.class.post('/graphql', headers: @headers, body: body)
 
