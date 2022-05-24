@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.authors                = ['Bunny', 'Rich Chetwynd']
   spec.email                  = ['support@bunny.com']
 
-  spec.summary                = 'Ruby SDK for Bunny'
+  spec.summary                = 'Ruby SDK for Bunny App'
   spec.description            = 'Use Bunny for SaaS subscription management, quoting, billing and CRM'
-  spec.homepage               = 'https://github.com/recurcrm/bunny-ruby'
+  spec.homepage               = 'https://github.com/bunny/bunny-ruby'
   spec.license                = 'MIT'
   spec.platform               = Gem::Platform::RUBY
   spec.required_ruby_version  = '>= 2.5.0'
