@@ -1,7 +1,7 @@
 module BunnyApp
   class Subscription
     @subscription_create_mutation = <<-'GRAPHQL'
-    mutation subscriptionCreate ($attributes: TrialAttributes!) {
+    mutation subscriptionCreate ($attributes: SubscriptionAttributes!) {
       subscriptionCreate (attributes: $attributes) {
           errors
           subscription {
@@ -22,7 +22,7 @@ module BunnyApp
     def self.create(account_name:, first_name:, last_name:, email:, product_plan_code:, options: {})
       variables = {
         attributes: {
-          company: account_name,
+          accountName: account_name,
           firstName: first_name,
           lastName: last_name,
           email: email,
