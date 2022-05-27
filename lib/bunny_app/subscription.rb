@@ -1,8 +1,8 @@
 module BunnyApp
-  class Trial
-    @trial_create_mutation = <<-'GRAPHQL'
-    mutation trialCreate ($attributes: TrialAttributes!) {
-      trialCreate (attributes: $attributes) {
+  class Subscription
+    @subscription_create_mutation = <<-'GRAPHQL'
+    mutation subscriptionCreate ($attributes: TrialAttributes!) {
+      subscriptionCreate (attributes: $attributes) {
           errors
           subscription {
               id
@@ -31,7 +31,7 @@ module BunnyApp
         }
       }
 
-      Client.new.query(@trial_create_mutation, variables)
+      Client.new.query(@subscription_create_mutation, variables)
     end
   end
 end
