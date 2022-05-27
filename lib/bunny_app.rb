@@ -4,7 +4,7 @@ require 'bunny_app/client'
 require 'bunny_app/usage'
 require 'bunny_app/platform'
 require 'bunny_app/environment'
-require 'bunny_app/trial'
+require 'bunny_app/subscription'
 
 module BunnyApp
   class << self

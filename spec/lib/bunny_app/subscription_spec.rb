@@ -1,4 +1,4 @@
-describe BunnyApp::Trial do
+describe BunnyApp::Subscription do
   describe 'create' do
     it 'should return a json result' do
       res = described_class.create(account_name: 'Account', first_name: 'First', last_name: 'Last', email: 'email@email.com', product_plan_code: 'Code')

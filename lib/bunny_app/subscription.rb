@@ -29,7 +29,8 @@ module BunnyApp
           productPlanCode: product_plan_code,
           trialStartDate: options[:trial_start_date],
           platformCode: options[:platform_code],
-          environmentCode: options[:environment_code]
+          environmentCode: options[:environment_code],
+          trial: options[:trial]
         }
       }
 
