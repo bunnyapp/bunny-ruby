@@ -19,7 +19,7 @@ module BunnyApp
   }
     GRAPHQL
 
-    def self.create(account_name:, first_name:, last_name:, email:, product_plan_code:, trial_start_date: Time.now.iso8601)
+    def self.create(account_name:, first_name:, last_name:, email:, product_plan_code:, options: {})
       variables = {
         attributes: {
           company: account_name,
@@ -27,7 +27,9 @@ module BunnyApp
           lastName: last_name,
           email: email,
           productPlanCode: product_plan_code,
-          trialStartDate: trial_start_date
+          trialStartDate: options[:trial_start_date],
+          platformCode: options[:platform_code],
+          environmentCode: options[:environment_code]
         }
       }
 
