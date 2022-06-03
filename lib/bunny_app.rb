@@ -5,6 +5,7 @@ require 'bunny_app/usage'
 require 'bunny_app/platform'
 require 'bunny_app/environment'
 require 'bunny_app/subscription'
+require 'bunny_app/webhook'
 
 module BunnyApp
   class << self

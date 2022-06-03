@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage               = 'https://github.com/bunny/bunny-ruby'
   spec.license                = 'MIT'
   spec.platform               = Gem::Platform::RUBY
-  spec.required_ruby_version  = '>= 2.5.0'
+  spec.required_ruby_version  = '>= 3.1.0'
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
