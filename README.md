@@ -112,6 +112,16 @@ variables = {
 json_response = BunnyApp.query(query, variables)
 ```
 
+### Verify webhook signature
+
+Bunny can send webhooks for key actions like a subscription change. When you get a webhook from Bunny you should verify the signature that is supplied in the `x-bunny-signature` header matches the payload.
+
+```ruby
+payload = '{"type":"SubscriptionProvisioningChange","payload":{"subscription":{"id":27,"state":"trial","trial_start_date":"2022-06-04","trial_end_date":"2022-06-18","start_date":null,"end_date":null,"auto_renew":false,"account":{"id":33,"name":"Ondricka, Flatley and Kessler"},"environment":null,"product":{"code":"stealth","name":"Stealth","description":null,"sku":null},"features":[{"code":"users","quantity":1},{"code":"crm","quantity":null}]}}}'
+
+BunnyApp::Webhook.verify("8bd5aa9c6a96fbce9fc3065af6e9871ac19a1d0a", payload, "secret-key")
+```
+
 ## Requirements
 
 This gem requires Ruby 2.5+
