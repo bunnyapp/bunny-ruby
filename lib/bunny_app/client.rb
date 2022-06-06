@@ -33,23 +33,28 @@ module BunnyApp
         'Content-Type' => 'application/x-www-form-urlencoded'
       }
 
-      res = self.class.post('/oauth/token', headers: headers, body: body)
+      res = self.class.post('/oauth/token', headers:, body:)
 
-      raise AuthorizationError, 'Invalid api credentials' unless res.code == 200
-
-      BunnyApp.retryable = true
-      res['access_token']
+      case res.code.to_s
+      when /2[0-9][0-9]/ # HTTP 2xx
+        BunnyApp.retryable = true
+        res['access_token']
+      when /40[0-9]/
+        raise AuthorizationError, res.parsed_response['error_description']
+      else
+        raise ResponseError, res.body
+      end
     end
 
     def query(query, variables, retries = 0)
       body = {
-        query: query,
-        variables: variables
+        query:,
+        variables:
       }.to_json
 
       @headers['Authorization'] = "Bearer #{BunnyApp.access_token}"
 
-      res = self.class.post('/graphql', headers: @headers, body: body)
+      res = self.class.post('/graphql', headers: @headers, body:)
 
       case res.code.to_s
       when /2[0-9][0-9]/ # HTTP 2xx
@@ -63,7 +68,7 @@ module BunnyApp
         query(query, variables, retries)
 
       when /403/ # HTTP 403
-        raise AuthorizationError, res.body
+        raise AuthorizationError, res.parsed_response['error_decscription']
       else
         raise ResponseError, res.body # HTTP 400, 500 etc
       end
