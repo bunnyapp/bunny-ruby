@@ -18,11 +18,11 @@ module BunnyApp
     }
     GRAPHQL
 
-    def self.create(name:, code:, platform_code: 'default', subscription_id: nil)
+    def self.create(name:, code:, platform_code: 'main', subscription_id: nil)
       variables = {
         attributes: {
-          name: name,
-          code: code,
+          name:,
+          code:,
           platformCode: platform_code
         },
         subscriptionId: subscription_id
