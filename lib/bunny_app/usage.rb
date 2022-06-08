@@ -23,15 +23,16 @@ module BunnyApp
     }
     GRAPHQL
 
-    def self.track(quantity:, feature_code:, environment_code:, usage_at: DateTime.now.iso8601)
+    def self.track(quantity:, feature_code:, environment_code:, usage_at: nil)
       variables = {
         attributes: {
-          quantity: quantity,
+          quantity:,
           featureCode: feature_code,
-          environmentCode: environment_code,
-          usageAt: usage_at
+          environmentCode: environment_code
         }
       }
+
+      variables[:attributes][:usageAt] = usage_at unless usage_at.nil?
 
       Client.new.query(@feature_usage_create_mutation, variables)
     end
