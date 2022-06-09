@@ -65,11 +65,11 @@ If you have usage based billing or just want to track feature usage then use thi
 ```ruby
 # Usage is tracked as if it just happened
 json_response = BunnyApp::Usage.track(
-  quantity: 5, feature_code: 'products', environment_code: '2')
+  quantity: 5, feature_code: 'products', tenant_code: '2')
 
 # Usage is tracked using the date supplied
 json_response = BunnyApp::Usage.track(
-  quantity: 5, feature_code: 'products', environment_code: '2', usage_at: '2022-03-10')
+  quantity: 5, feature_code: 'products', tenant_code: '2', usage_at: '2022-03-10')
 ```
 
 ### Custom queries & mutations
@@ -85,7 +85,7 @@ mutation featureUsageCreate ($attributes: FeatureUsageAttributes!) {
             id
             quantity
             usageAt
-            environment {
+            tenant {
                 id
                 code
                 name
@@ -104,7 +104,7 @@ variables = {
   attributes: {
     quantity: 1,
     usageAt: "2022-03-10",
-    environmentCode: "env-123",
+    tenantCode: "123456",
     featureCode: "users"
   }
 }
@@ -117,7 +117,7 @@ json_response = BunnyApp.query(query, variables)
 Bunny can send webhooks for key actions like a subscription change. When you get a webhook from Bunny you should verify the signature that is supplied in the `x-bunny-signature` header matches the payload.
 
 ```ruby
-payload = '{"type":"SubscriptionProvisioningChange","payload":{"subscription":{"id":27,"state":"trial","trial_start_date":"2022-06-04","trial_end_date":"2022-06-18","start_date":null,"end_date":null,"auto_renew":false,"account":{"id":33,"name":"Ondricka, Flatley and Kessler"},"environment":null,"product":{"code":"stealth","name":"Stealth","description":null,"sku":null},"features":[{"code":"users","quantity":1},{"code":"crm","quantity":null}]}}}'
+payload = '{"type":"SubscriptionProvisioningChange","payload":{"subscription":{"id":27,"state":"trial","trial_start_date":"2022-06-04","trial_end_date":"2022-06-18","start_date":null,"end_date":null,"auto_renew":false,"account":{"id":33,"name":"Ondricka, Flatley and Kessler"},"tenant":null,"product":{"code":"stealth","name":"Stealth","description":null,"sku":null},"features":[{"code":"users","quantity":1},{"code":"crm","quantity":null}]}}}'
 
 BunnyApp::Webhook.verify("8bd5aa9c6a96fbce9fc3065af6e9871ac19a1d0a", payload, "secret-key")
 ```

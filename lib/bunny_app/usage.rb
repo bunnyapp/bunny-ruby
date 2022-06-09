@@ -8,7 +8,7 @@ module BunnyApp
                 id
                 quantity
                 usageAt
-                environment {
+                tenant {
                     id
                     code
                     name
@@ -23,12 +23,12 @@ module BunnyApp
     }
     GRAPHQL
 
-    def self.track(quantity:, feature_code:, environment_code:, usage_at: nil)
+    def self.track(quantity:, feature_code:, tenant_code:, usage_at: nil)
       variables = {
         attributes: {
           quantity:,
           featureCode: feature_code,
-          environmentCode: environment_code
+          tenantCode: tenant_code
         }
       }
 

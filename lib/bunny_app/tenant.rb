@@ -1,9 +1,9 @@
 module BunnyApp
-  class Environment
-    @environment_create_mutation = <<-'GRAPHQL'
-    mutation environmentCreate ($attributes: EnvironmentAttributes!, $subscriptionId: ID!) {
-      environmentCreate (attributes: $attributes, subscriptionId: $subscriptionId) {
-        environment {
+  class Tenant
+    @tenant_create_mutation = <<-'GRAPHQL'
+    mutation tenantCreate ($attributes: TenantAttributes!, $subscriptionId: ID!) {
+      tenantCreate (attributes: $attributes, subscriptionId: $subscriptionId) {
+        tenant {
           code
           id
           name
@@ -28,7 +28,7 @@ module BunnyApp
         subscriptionId: subscription_id
       }
 
-      Client.new.query(@environment_create_mutation, variables)
+      Client.new.query(@tenant_create_mutation, variables)
     end
   end
 end

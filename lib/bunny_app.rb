@@ -3,7 +3,7 @@ require 'bunny_app/errors'
 require 'bunny_app/client'
 require 'bunny_app/usage'
 require 'bunny_app/platform'
-require 'bunny_app/environment'
+require 'bunny_app/tenant'
 require 'bunny_app/subscription'
 require 'bunny_app/webhook'
 
