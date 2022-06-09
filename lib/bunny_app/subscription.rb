@@ -25,11 +25,11 @@ module BunnyApp
           accountName: account_name,
           firstName: first_name,
           lastName: last_name,
-          email: email,
+          email:,
           productPlanCode: product_plan_code,
           trialStartDate: options[:trial_start_date],
           platformCode: options[:platform_code],
-          environmentCode: options[:environment_code],
+          tenantCode: options[:tenant_code],
           trial: options[:trial]
         }
       }
