@@ -104,7 +104,7 @@ variables = {
   attributes: {
     quantity: 1,
     usageAt: "2022-03-10",
-    tenantCode: "env-123",
+    tenantCode: "123456",
     featureCode: "users"
   }
 }
