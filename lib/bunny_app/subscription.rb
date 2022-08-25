@@ -14,6 +14,10 @@ module BunnyApp
               productPlan {
                 name
               }
+              tenant {
+                code
+                name
+              }
           }
       }
   }
