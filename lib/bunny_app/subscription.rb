@@ -32,8 +32,7 @@ module BunnyApp
           email:,
           productPlanCode: product_plan_code,
           trialStartDate: options[:trial_start_date],
-          platformCode: options[:platform_code],
-          tenantCode: options[:tenant_code],
+          tenantCode: options[:tenant_code]&.to_s,
           trial: options[:trial]
         }
       }
