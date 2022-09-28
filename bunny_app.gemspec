@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary                = 'Ruby SDK for Bunny App'
   spec.description            = 'Use Bunny for SaaS subscription management, cpq, billing and CRM'
-  spec.homepage               = 'https://github.com/bunny/bunny-ruby'
+  spec.homepage               = 'https://github.com/bunnyapp/bunny-ruby'
   spec.license                = 'MIT'
   spec.platform               = Gem::Platform::RUBY
   spec.required_ruby_version  = '>= 3.1.0'
