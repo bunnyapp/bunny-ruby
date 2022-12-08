@@ -109,7 +109,7 @@ variables = {
   }
 }
 
-json_response = BunnyApp.query(query, variables)
+response = BunnyApp.query(query, variables)
 ```
 
 ### Verify webhook signature

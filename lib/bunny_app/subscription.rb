@@ -23,6 +23,7 @@ module BunnyApp
   }
     GRAPHQL
 
+    # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     def self.create(product_plan_code:, options: {})
       variables = {
         attributes: {
@@ -32,9 +33,9 @@ module BunnyApp
       }
 
       if options[:account_id]
-        variables[:account_id] = options[:account_id]
+        variables[:attributes][:account_id] = options[:account_id]
       else
-        variables[:account] = {
+        variables[:attributes][:account] = {
           name: options[:account_name]&.to_s,
           billingContact: {
             firstName: options[:first_name]&.to_s,
@@ -45,7 +46,7 @@ module BunnyApp
       end
 
       if options[:tenant_code]
-        variables[:tenant] = {
+        variables[:attributes][:tenant] = {
           code: options[:tenant_code]&.to_s,
           name: options[:tenant_name]&.to_s
         }
