@@ -3,22 +3,32 @@ module BunnyApp
     @subscription_create_mutation = <<-'GRAPHQL'
     mutation subscriptionCreate ($attributes: SubscriptionAttributes!) {
       subscriptionCreate (attributes: $attributes) {
-          errors
-          subscription {
+        errors
+        subscription {
+          id
+          account {
               id
-              trialStartDate
-              trialEndDate
-              startDate
-              endDate
-              state
-              productPlan {
-                name
-              }
-              tenant {
-                code
-                name
+              name
+              contacts {
+                  id
+                  firstName
+                  lastName
               }
           }
+          trialStartDate
+          trialEndDate
+          startDate
+          endDate
+          state
+          productPlan {
+            name
+          }
+          tenant {
+            id
+            code
+            name
+          }
+        }
       }
   }
     GRAPHQL
