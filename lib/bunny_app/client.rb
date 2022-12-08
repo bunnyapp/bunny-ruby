@@ -58,7 +58,7 @@ module BunnyApp
 
       case res.code.to_s
       when /2[0-9][0-9]/ # HTTP 2xx
-        res.body
+        JSON.parse(res.body)
       when /401/ # Access Token Expired
         raise AuthorizationError, 'Invalid access token' unless BunnyApp.retryable
         raise AuthorizationError, 'Invalid api credentials' if retries >= 1
