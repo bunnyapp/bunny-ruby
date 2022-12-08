@@ -23,19 +23,33 @@ module BunnyApp
   }
     GRAPHQL
 
-    def self.create(account_name:, first_name:, last_name:, email:, product_plan_code:, options: {})
+    def self.create(product_plan_code:, options: {})
       variables = {
         attributes: {
-          accountName: account_name,
-          firstName: first_name,
-          lastName: last_name,
-          email:,
           productPlanCode: product_plan_code,
-          trialStartDate: options[:trial_start_date],
-          tenantCode: options[:tenant_code]&.to_s,
-          trial: options[:trial]
+          trial: options[:trial] || false
         }
       }
+
+      if options[:account_id]
+        variables[:account_id] = options[:account_id]
+      else
+        variables[:account] = {
+          name: options[:account_name]&.to_s,
+          billingContact: {
+            firstName: options[:first_name]&.to_s,
+            lastName: options[:last_name]&.to_s,
+            email: options[:email]&.to_s
+          }
+        }
+      end
+
+      if options[:tenant_code]
+        variables[:tenant] = {
+          code: options[:tenant_code]&.to_s,
+          name: options[:tenant_name]&.to_s
+        }
+      end
 
       Client.new.query(@subscription_create_mutation, variables)
     end
