@@ -58,17 +58,34 @@ Create a config file at `config/initializers/bunny_app.rb`
 > bin/rails g bunny_app:install
 ```
 
+### Create a subscription
+
+```ruby
+response = BunnyApp::Subscription.create(
+  product_plan_code: 'starter',
+  options: {
+    account_name: "Superdesk",
+    first_name: "Meg",
+    last_name: "La Don",
+    email: "meg@example.com",
+    trial: true,
+    tenant_code: "123456",
+    tenant_name: "Superdesk"
+  }
+)
+```
+
 ### Track feature usage
 
 If you have usage based billing or just want to track feature usage then use this method.
 
 ```ruby
 # Usage is tracked as if it just happened
-json_response = BunnyApp::Usage.track(
+response = BunnyApp::Usage.track(
   quantity: 5, feature_code: 'products', tenant_code: '2')
 
 # Usage is tracked using the date supplied
-json_response = BunnyApp::Usage.track(
+response = BunnyApp::Usage.track(
   quantity: 5, feature_code: 'products', tenant_code: '2', usage_at: '2022-03-10')
 ```
 
