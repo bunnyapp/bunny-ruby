@@ -43,7 +43,7 @@ module BunnyApp
       }
 
       if options[:account_id]
-        variables[:attributes][:account_id] = options[:account_id]
+        variables[:attributes][:accountId] = options[:account_id]
       else
         variables[:attributes][:account] = {
           name: options[:account_name]&.to_s,
