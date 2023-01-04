@@ -3,24 +3,28 @@ module BunnyApp
     @subscription_create_mutation = <<-'GRAPHQL'
     mutation subscriptionCreate ($attributes: SubscriptionAttributes!) {
       subscriptionCreate (attributes: $attributes) {
-        errors
         subscription {
           id
           account {
+            id
+            name
+            contacts {
               id
-              name
-              contacts {
-                  id
-                  firstName
-                  lastName
-              }
+              firstName
+              lastName
+            }
           }
           trialStartDate
           trialEndDate
           startDate
           endDate
           state
-          productPlan {
+          plan {
+            code
+            name
+          }
+          priceList {
+            code
             name
           }
           tenant {
@@ -29,8 +33,9 @@ module BunnyApp
             name
           }
         }
+        errors
       }
-  }
+    }
     GRAPHQL
 
     # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
