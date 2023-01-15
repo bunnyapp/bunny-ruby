@@ -1,8 +1,8 @@
 describe BunnyApp::Platform do
   describe 'create' do
-    it 'should return a json result' do
+    it 'should return a hash result' do
       res = described_class.create(name: 'Name', code: 'code')
-      expect(res).to eq('{}')
+      expect(res).to eq({})
     end
 
     it 'should require name and code arguments' do

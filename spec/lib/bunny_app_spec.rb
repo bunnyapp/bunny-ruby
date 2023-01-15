@@ -14,9 +14,9 @@ describe BunnyApp do
   end
 
   describe 'query' do
-    it 'should return a json string response' do
+    it 'should return a hash response' do
       res = BunnyApp.query("graphql query", { variable: 1 })
-      expect(res).to eq("{}")
+      expect(res).to eq({})
     end
 
     it 'should require query and variables arguments' do

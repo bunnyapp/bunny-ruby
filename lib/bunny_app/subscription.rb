@@ -39,10 +39,10 @@ module BunnyApp
     GRAPHQL
 
     # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-    def self.create(product_plan_code:, options: {})
+    def self.create(price_list_code:, options: {})
       variables = {
         attributes: {
-          productPlanCode: product_plan_code,
+          priceListCode: price_list_code,
           trial: options[:trial] || false
         }
       }
