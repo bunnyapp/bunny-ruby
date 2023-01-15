@@ -1,8 +1,13 @@
 describe BunnyApp::Subscription do
   describe 'create' do
-    it 'should return a json result' do
-      res = described_class.create(account_name: 'Account', first_name: 'First', last_name: 'Last', email: 'email@email.com', product_plan_code: 'Code')
-      expect(res).to eq('{}')
+    it 'should return a hash result' do
+      res = described_class.create(price_list_code: 'Code', options: {
+        account_name: 'Account',
+        first_name: 'First',
+        last_name: 'Last',
+        email: 'email@email.com'
+      })
+      expect(res).to eq({})
     end
 
     it 'should require all arguments excluding options' do

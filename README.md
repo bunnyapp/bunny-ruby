@@ -62,7 +62,7 @@ Create a config file at `config/initializers/bunny_app.rb`
 
 ```ruby
 response = BunnyApp::Subscription.create(
-  product_plan_code: 'starter',
+  price_list_code: 'starter',
   options: {
     account_name: "Superdesk",
     first_name: "Meg",

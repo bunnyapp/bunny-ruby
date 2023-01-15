@@ -1,8 +1,8 @@
 describe BunnyApp::Usage do
   describe 'track' do
-    it 'should return a json result' do
+    it 'should return a hash result' do
       res = described_class.track(quantity: 1, feature_code: 'code', tenant_code: 'code')
-      expect(res).to eq('{}')
+      expect(res).to eq({})
     end
 
     it 'should require quantity, feature_code, and tenant_code arguments' do
