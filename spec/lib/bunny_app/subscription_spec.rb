@@ -7,7 +7,7 @@ describe BunnyApp::Subscription do
         last_name: 'Last',
         email: 'email@email.com'
       })
-      expect(res).to eq({})
+      expect(res).to be_a(Hash)
     end
 
     it 'should require all arguments excluding options' do

@@ -7,8 +7,36 @@ describe BunnyApp::Client do
     end
 
     it 'should include a user-agent header' do
-      client = described_class.new
       expect(client.headers).to include(match(/User-Agent/) => "BunnyApp Ruby v#{BunnyApp::VERSION}")
+    end
+  end
+
+  describe 'query' do
+    describe 'when ok response payload contains errors' do
+      let(:response) { instance_double(HTTParty::Response, code: 200, body: '{"data":{"subscriptionCreate":null},"errors":[{"message":"Price list not found and Trial is not allowed on this price list","locations":[{"line":2,"column":5}],"path":["subscriptionCreate"]}]}') }
+
+      before do
+        allow(described_class).to receive(:post).and_return(response)
+      end
+
+      it 'should raise an exception' do
+        expect{
+          client.query('query', {})
+        }.to raise_error(BunnyApp::ResponseError)
+      end
+    end
+
+    describe 'when ok response payload does not contain errors' do
+      let(:response) { instance_double(HTTParty::Response, code: 200, body: '{"data":{"tenantCreate":{"errors":null,"tenant":{"accountId":"1","code":"test","id":"365","name":"Test","platformId":"1","subdomain":"test"}}}}') }
+
+      before do
+        allow(described_class).to receive(:post).and_return(response)
+      end
+
+      it 'should return a hash' do
+        res = client.query('query', {})
+        expect(res).to be_a(Hash)
+      end
     end
   end
 end
