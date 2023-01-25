@@ -75,6 +75,14 @@ response = BunnyApp::Subscription.create(
 )
 ```
 
+### Get a portal session token for use with Bunny.js
+
+```ruby
+response = BunnyApp::PortalSession.create(
+  tenant_code: "123456"
+)
+```
+
 ### Track feature usage
 
 If you have usage based billing or just want to track feature usage then use this method.
