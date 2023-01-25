@@ -20,7 +20,7 @@ module BunnyApp
         'Authorization' => "Bearer #{BunnyApp.access_token}"
       }
 
-      @headers['host'] = host_header unless host_header.nil?
+      @headers['Host'] = host_header unless host_header.nil?
     end
 
     def fetch_access_token
