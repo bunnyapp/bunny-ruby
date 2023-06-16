@@ -9,9 +9,11 @@ module BunnyApp
     }
     GRAPHQL
 
-    def self.create(tenant_code:)
+    def self.create(tenant_code:, expiry_hours: 24, return_url: nil)
       variables = {
-        tenantCode: tenant_code
+        tenantCode: tenant_code,
+        returnUrl: return_url,
+        expiry: expiry_hours
       }
 
       Client.new.query(@portal_session_create_mutation, variables)
