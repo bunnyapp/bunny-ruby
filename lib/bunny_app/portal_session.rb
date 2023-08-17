@@ -16,7 +16,8 @@ module BunnyApp
         expiry: expiry_hours
       }
 
-      Client.new.query(@portal_session_create_mutation, variables)
+      res = Client.new.query(@portal_session_create_mutation, variables)
+      res['data']['portalSessionCreate']['token']
     end
   end
 end

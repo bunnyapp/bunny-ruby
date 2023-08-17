@@ -61,7 +61,7 @@ module BunnyApp
       case res.code.to_s
       when /2[0-9][0-9]/ # HTTP 2xx
         response_body = JSON.parse(res.body)
-        raise ResponseError, response_body['errors'] if response_body['errors']
+        raise ResponseError, (response_body['errors'].map { |error| error['message'] }) if response_body['errors']
 
         response_body
 
