@@ -1,5 +1,5 @@
 module BunnyApp
-  class Usage
+  class FeatureUsage
     @feature_usage_create_mutation = <<-'GRAPHQL'
     mutation featureUsageCreate ($attributes: FeatureUsageAttributes!) {
         featureUsageCreate (attributes: $attributes) {
@@ -23,7 +23,7 @@ module BunnyApp
     }
     GRAPHQL
 
-    def self.track(quantity:, feature_code:, tenant_code:, usage_at: nil)
+    def self.create(quantity:, feature_code:, tenant_code:, usage_at: nil)
       variables = {
         attributes: {
           quantity:,
@@ -34,7 +34,8 @@ module BunnyApp
 
       variables[:attributes][:usageAt] = usage_at unless usage_at.nil?
 
-      Client.new.query(@feature_usage_create_mutation, variables)
+      res = Client.new.query(@feature_usage_create_mutation, variables)
+      res['data']['featureUsageCreate']['featureUsage']
     end
   end
 end

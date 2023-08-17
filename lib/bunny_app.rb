@@ -1,7 +1,7 @@
 require 'bunny_app/version'
 require 'bunny_app/errors'
 require 'bunny_app/client'
-require 'bunny_app/usage'
+require 'bunny_app/feature_usage'
 require 'bunny_app/platform'
 require 'bunny_app/tenant'
 require 'bunny_app/subscription'

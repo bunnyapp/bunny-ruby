@@ -18,6 +18,29 @@ module BunnyApp
     }
     GRAPHQL
 
+    @tenant_query = <<-'GRAPHQL'
+    query tenant ($code: String!) {
+      tenant (code: $code) {
+        id
+        code
+        name
+        subdomain
+        account {
+          id
+          name
+          billingDay
+        }
+        latestProvisioningChange {
+            change
+            createdAt
+            features
+            id
+            updatedAt
+        }
+      }
+    }
+    GRAPHQL
+
     def self.create(name:, code:, platform_code: 'main', subscription_id: nil)
       variables = {
         attributes: {
@@ -28,7 +51,17 @@ module BunnyApp
         subscriptionId: subscription_id
       }
 
-      Client.new.query(@tenant_create_mutation, variables)
+      res = Client.new.query(@tenant_create_mutation, variables)
+      res['data']['tenantCreate']['tenant']
+    end
+
+    def self.find_by(code:)
+      variables = {
+        code:
+      }
+
+      res = Client.new.query(@tenant_query, variables)
+      res['data']['tenant']
     end
   end
 end
