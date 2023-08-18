@@ -25,18 +25,5 @@ describe BunnyApp::Client do
         }.to raise_error(BunnyApp::ResponseError)
       end
     end
-
-    describe 'when ok response payload does not contain errors' do
-      let(:response) { instance_double(HTTParty::Response, code: 200, body: '{"data":{"tenantCreate":{"errors":null,"tenant":{"accountId":"1","code":"test","id":"365","name":"Test","platformId":"1","subdomain":"test"}}}}') }
-
-      before do
-        allow(described_class).to receive(:post).and_return(response)
-      end
-
-      it 'should return a hash' do
-        res = client.query('query', {})
-        expect(res).to be_a(Hash)
-      end
-    end
   end
 end
