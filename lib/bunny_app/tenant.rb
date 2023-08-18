@@ -1,8 +1,8 @@
 module BunnyApp
   class Tenant
     @tenant_create_mutation = <<-'GRAPHQL'
-    mutation tenantCreate ($attributes: TenantAttributes!, $subscriptionId: ID!) {
-      tenantCreate (attributes: $attributes, subscriptionId: $subscriptionId) {
+    mutation tenantCreate ($attributes: TenantAttributes!) {
+      tenantCreate (attributes: $attributes) {
         tenant {
           code
           id
@@ -41,14 +41,14 @@ module BunnyApp
     }
     GRAPHQL
 
-    def self.create(name:, code:, platform_code: 'main', subscription_id: nil)
+    def self.create(name:, code:, account_id:, platform_code: 'main')
       variables = {
         attributes: {
           name:,
           code:,
-          platformCode: platform_code
-        },
-        subscriptionId: subscription_id
+          platformCode: platform_code,
+          accountId: account_id
+        }
       }
 
       res = Client.new.query(@tenant_create_mutation, variables)
