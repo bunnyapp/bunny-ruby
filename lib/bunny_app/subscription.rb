@@ -38,6 +38,14 @@ module BunnyApp
     }
     GRAPHQL
 
+    @subscription_cancel_mutation = <<-'GRAPHQL'
+    mutation subscriptionCancel ($ids: [ID!]!) {
+      subscriptionCancel (ids: $ids) {
+          errors
+      }
+    }
+    GRAPHQL
+
     # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     def self.create(price_list_code:, options: {})
       variables = {
@@ -67,7 +75,18 @@ module BunnyApp
         }
       end
 
-      Client.new.query(@subscription_create_mutation, variables)
+      res = Client.new.query(@subscription_create_mutation, variables)
+      res['data']['subscriptionCreate']['subscription']
+    end
+
+    def self.cancel(subscription_id:)
+      variables = {
+        ids: [subscription_id]
+      }
+
+      Client.new.query(@subscription_cancel_mutation, variables)
+
+      true
     end
   end
 end

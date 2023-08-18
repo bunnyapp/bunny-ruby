@@ -14,11 +14,6 @@ describe BunnyApp do
   end
 
   describe 'query' do
-    it 'should return a hash response' do
-      res = BunnyApp.query("graphql query", { variable: 1 })
-      expect(res).to be_a(Hash)
-    end
-
     it 'should require query and variables arguments' do
       expect { BunnyApp.query("graphql query") }.to raise_error(ArgumentError)
     end

@@ -1,5 +1,17 @@
 describe BunnyApp::Subscription do
   describe 'create' do
+
+    before(:each) do
+      response_body = {
+        "data" => {
+          "subscriptionCreate" => {
+            "subscription" => {}
+          }
+        }
+      }
+      allow_any_instance_of(BunnyApp::Client).to receive(:query).and_return(response_body)
+    end
+
     it 'should return a hash result' do
       res = described_class.create(price_list_code: 'Code', options: {
         account_name: 'Account',

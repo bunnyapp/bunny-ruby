@@ -16,12 +16,13 @@ module BunnyApp
     def self.create(name:, code:)
       variables = {
         attributes: {
-          name: name,
-          code: code
+          name:,
+          code:
         }
       }
 
-      Client.new.query(@platform_create_mutation, variables)
+      res = Client.new.query(@platform_create_mutation, variables)
+      res['data']['platformCreate']['platform']
     end
   end
 end

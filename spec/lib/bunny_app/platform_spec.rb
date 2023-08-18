@@ -1,6 +1,15 @@
 describe BunnyApp::Platform do
   describe 'create' do
     it 'should return a hash result' do
+      response_body = {
+        "data" => {
+          "platformCreate" => {
+            "platform" => {}
+          }
+        }
+      }
+      allow_any_instance_of(BunnyApp::Client).to receive(:query).and_return(response_body)
+
       res = described_class.create(name: 'Name', code: 'code')
       expect(res).to be_a(Hash)
     end
