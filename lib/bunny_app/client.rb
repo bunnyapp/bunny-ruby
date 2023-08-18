@@ -19,6 +19,8 @@ module BunnyApp
         'Content-Type' => 'application/json',
         'Authorization' => "Bearer #{BunnyApp.access_token}"
       }
+
+      @headers['host'] = host_header unless host_header.nil?
     end
 
     def fetch_access_token
@@ -88,6 +90,10 @@ module BunnyApp
 
     def verify_ssl
       return true unless ENV['IGNORE_SSL']
+    end
+
+    def host_header
+      ENV.fetch('BUNNY_HOST_HEADER', nil)
     end
   end
 end
