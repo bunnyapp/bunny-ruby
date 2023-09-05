@@ -76,7 +76,10 @@ module BunnyApp
       when /403/ # HTTP 403
         raise AuthorizationError, res.parsed_response['error_decscription']
       else
-        raise ResponseError, res.body # HTTP 400, 500 etc
+        # HTTP 400, 500 etc
+        puts "Bunny SDK Response Error Headers: #{res.headers}"
+        puts "Bunny SDK Response Error Body: #{res.body}"
+        raise ResponseError, res.body
       end
     end
 
