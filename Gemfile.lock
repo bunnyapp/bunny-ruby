@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bunny_app (1.29.0)
+    bunny_app (2.0.0)
       httparty (~> 0.20)
       json (~> 2.6)
 
