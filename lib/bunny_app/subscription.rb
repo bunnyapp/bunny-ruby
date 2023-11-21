@@ -19,6 +19,7 @@ module BunnyApp
           startDate
           endDate
           state
+          evergreen
           plan {
             code
             name
