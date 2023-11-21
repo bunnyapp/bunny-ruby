@@ -52,7 +52,8 @@ module BunnyApp
       variables = {
         attributes: {
           priceListCode: price_list_code,
-          trial: options[:trial] || false
+          trial: options[:trial] || false,
+          evergreen: options[:evergreen] || false
         }
       }
 
