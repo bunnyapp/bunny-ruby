@@ -52,6 +52,8 @@ module BunnyApp
       }
 
       res = Client.new.query(@tenant_create_mutation, variables)
+      raise ResponseError, res['data']['tenantCreate']['errors'].join(',') if res['data']['tenantCreate']['errors']
+
       res['data']['tenantCreate']['tenant']
     end
 
@@ -61,6 +63,7 @@ module BunnyApp
       }
 
       res = Client.new.query(@tenant_query, variables)
+
       res['data']['tenant']
     end
   end

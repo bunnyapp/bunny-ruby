@@ -22,6 +22,8 @@ module BunnyApp
       }
 
       res = Client.new.query(@platform_create_mutation, variables)
+      raise ResponseError, res['data']['platformCreate']['errors'].join(',') if res['data']['platformCreate']['errors']
+
       res['data']['platformCreate']['platform']
     end
   end
