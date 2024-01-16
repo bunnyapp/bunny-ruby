@@ -7,6 +7,7 @@ require 'bunny_app/tenant'
 require 'bunny_app/subscription'
 require 'bunny_app/webhook'
 require 'bunny_app/portal_session'
+require 'bunny_app/tenant_metrics'
 
 module BunnyApp
   class << self
