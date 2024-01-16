@@ -35,6 +35,8 @@ module BunnyApp
       variables[:attributes][:usageAt] = usage_at unless usage_at.nil?
 
       res = Client.new.query(@feature_usage_create_mutation, variables)
+      raise ResponseError, res['data']['featureUsageCreate']['errors'].join(',') if res['data']['featureUsageCreate']['errors']
+
       res['data']['featureUsageCreate']['featureUsage']
     end
   end
