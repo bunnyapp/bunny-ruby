@@ -4,10 +4,10 @@ Ruby SDK for Bunny
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Run `bundle add bunny_app` or add this line to your application's Gemfile:
 
 ```ruby
-gem 'bunnyapp'
+gem 'bunny_app'
 ```
 
 And then execute:
@@ -19,7 +19,7 @@ $ bundle
 Or install it yourself as:
 
 ```sh
-$ gem install bunnyapp
+$ gem install bunny_app
 ```
 
 ## Getting Started
