@@ -12,6 +12,7 @@ module BunnyApp
     def initialize
       self.class.base_uri BunnyApp.base_uri
       self.class.default_options.update(verify: verify_ssl)
+      self.class.default_timeout 3 # seconds
 
       BunnyApp.access_token ||= fetch_access_token
       @headers = {
