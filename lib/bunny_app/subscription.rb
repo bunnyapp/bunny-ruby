@@ -1,6 +1,6 @@
 module BunnyApp
   class Subscription
-    @subscription_create_mutation = <<-'GRAPHQL'
+    @subscription_create_mutation = <<-GRAPHQL
     mutation subscriptionCreate ($attributes: SubscriptionAttributes!) {
       subscriptionCreate (attributes: $attributes) {
         subscription {
@@ -39,7 +39,7 @@ module BunnyApp
     }
     GRAPHQL
 
-    @subscription_cancel_mutation = <<-'GRAPHQL'
+    @subscription_cancel_mutation = <<-GRAPHQL
     mutation subscriptionCancel ($ids: [ID!]!) {
       subscriptionCancel (ids: $ids) {
           errors
@@ -78,6 +78,8 @@ module BunnyApp
       end
 
       res = Client.new.query(@subscription_create_mutation, variables)
+      raise ResponseError, res['data']['subscriptionCreate']['errors'].join(',') if res['data']['subscriptionCreate']['errors']
+
       res['data']['subscriptionCreate']['subscription']
     end
 
@@ -86,7 +88,8 @@ module BunnyApp
         ids: [subscription_id]
       }
 
-      Client.new.query(@subscription_cancel_mutation, variables)
+      res = Client.new.query(@subscription_cancel_mutation, variables)
+      raise ResponseError, res['data']['subscriptionCancel']['errors'].join(',') if res['data']['subscriptionCancel']['errors']
 
       true
     end

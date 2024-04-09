@@ -17,6 +17,8 @@ module BunnyApp
       }
 
       res = Client.new.query(@portal_session_create_mutation, variables)
+      raise ResponseError, res['data']['portalSessionCreate']['errors'].join(',') if res['data']['portalSessionCreate']['errors']
+
       res['data']['portalSessionCreate']['token']
     end
   end

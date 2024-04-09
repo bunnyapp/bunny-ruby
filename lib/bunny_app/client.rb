@@ -93,7 +93,7 @@ module BunnyApp
     end
 
     def verify_ssl
-      return true unless ENV['IGNORE_SSL']
+      true unless ENV['IGNORE_SSL']
     end
 
     def host_header
