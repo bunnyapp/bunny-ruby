@@ -13,11 +13,11 @@ describe BunnyApp::FeatureUsage do
     end
 
     it 'should return a hash result' do
-      res = described_class.create(quantity: 1, feature_code: 'code', tenant_code: 'code')
+      res = described_class.create(quantity: 1, feature_code: 'code', subscription_id: 123)
       expect(res).to be_a(Hash)
     end
 
-    it 'should require quantity, feature_code, and tenant_code arguments' do
+    it 'should require quantity, feature_code, and subscription_id arguments' do
       expect {
         described_class.create(quantity: 1, feature_code: 'code')
       }.to raise_error(ArgumentError)
@@ -25,13 +25,13 @@ describe BunnyApp::FeatureUsage do
 
     it 'should not require usage_at' do
       expect {
-        described_class.create(quantity: 1, feature_code: 'code', tenant_code: 'code')
+        described_class.create(quantity: 1, feature_code: 'code', subscription_id: 123)
       }.not_to raise_error
     end
 
     it 'should allow setting usage_at' do
       expect {
-        described_class.create(quantity: 1, feature_code: 'code', tenant_code: 'code', usage_at: '2022-03-11')
+        described_class.create(quantity: 1, feature_code: 'code', subscription_id: 123, usage_at: '2022-03-11')
       }.not_to raise_error
     end
   end

@@ -1,6 +1,6 @@
 module BunnyApp
   class FeatureUsage
-    @feature_usage_create_mutation = <<-'GRAPHQL'
+    @feature_usage_create_mutation = <<-GRAPHQL
     mutation featureUsageCreate ($attributes: FeatureUsageAttributes!) {
         featureUsageCreate (attributes: $attributes) {
             errors
@@ -8,10 +8,8 @@ module BunnyApp
                 id
                 quantity
                 usageAt
-                tenant {
+                subscription {
                     id
-                    code
-                    name
                 }
                 feature {
                     id
@@ -23,12 +21,12 @@ module BunnyApp
     }
     GRAPHQL
 
-    def self.create(quantity:, feature_code:, tenant_code:, usage_at: nil)
+    def self.create(quantity:, feature_code:, subscription_id:, usage_at: nil)
       variables = {
         attributes: {
           quantity:,
           featureCode: feature_code,
-          tenantCode: tenant_code
+          subscriptionId: subscription_id
         }
       }
 
