@@ -153,9 +153,9 @@ This gem requires Ruby 2.5+
 
 ## Development
 
-Run `bin/setup` to install dependencies.
+Run `bundle install` to install dependencies.
 
-Run `rake spec` to run the tests.
+Run `bundle exec rake spec` to run the tests.
 
 You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
@@ -164,3 +164,19 @@ Set IGNORE_SSL when running locally to ignore ssl warnings.
 ```sh
 > IGNORE_SSL=true bin/console
 ```
+
+## Publish to Ruby gems
+
+Update `version.rb` with a new version number then build the gem
+
+```sh
+gem build
+```
+
+Then publish using the new build number
+
+```sh
+gem push bunny_app-x.x.x.gem
+```
+
+The rubygems account for publishing is protected by MFA and currently managed by @richet
