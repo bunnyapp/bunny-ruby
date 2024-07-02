@@ -1,12 +1,12 @@
 module BunnyApp
   class PortalSession
-    @portal_session_create_mutation = <<-'GRAPHQL'
-    mutation portalSessionCreate ($tenantCode: String!) {
-      portalSessionCreate (tenantCode: $tenantCode) {
-          token
-          errors
+    @portal_session_create_mutation = <<-GRAPHQL
+      mutation portalSessionCreate ($tenantCode: String!, $returnUrl: String!) {
+          portalSessionCreate (tenantCode: $tenantCode, returnUrl: $returnUrl) {
+              token
+              errors
+          }
       }
-    }
     GRAPHQL
 
     def self.create(tenant_code:, expiry_hours: 24, return_url: nil)
