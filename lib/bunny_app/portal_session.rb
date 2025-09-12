@@ -1,7 +1,7 @@
 module BunnyApp
   class PortalSession
     @portal_session_create_mutation = <<-GRAPHQL
-      mutation portalSessionCreate ($tenantCode: String!, $returnUrl: String!) {
+      mutation portalSessionCreate ($tenantCode: String!, $returnUrl: String) {
           portalSessionCreate (tenantCode: $tenantCode, returnUrl: $returnUrl) {
               token
               errors
