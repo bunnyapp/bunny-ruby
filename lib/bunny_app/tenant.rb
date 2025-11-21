@@ -1,6 +1,6 @@
 module BunnyApp
   class Tenant
-    @tenant_create_mutation = <<-'GRAPHQL'
+    @tenant_create_mutation = <<-GRAPHQL
     mutation tenantCreate ($attributes: TenantAttributes!) {
       tenantCreate (attributes: $attributes) {
         tenant {
@@ -18,7 +18,7 @@ module BunnyApp
     }
     GRAPHQL
 
-    @tenant_query = <<-'GRAPHQL'
+    @tenant_query = <<-GRAPHQL
     query tenant ($code: String!) {
       tenant (code: $code) {
         id
@@ -29,13 +29,6 @@ module BunnyApp
           id
           name
           billingDay
-        }
-        latestProvisioningChange {
-            change
-            createdAt
-            features
-            id
-            updatedAt
         }
       }
     }
