@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.4.0 (14-Apr-2026)
+
+- Add `Subscription.quantity_update` for updating subscription charge quantities
+- Add `Subscription.trial_convert` for converting a trial to a paid subscription
+
+## 2.3.0 (22-Nov-2025)
+
+- Remove deprecated `latestProvisioningChange` fields from `Tenant.find_by` query
+
 ## 2.2.2 (13-Sep-2025)
 
 - Make returnUrl optional in PortalSession.create mutation

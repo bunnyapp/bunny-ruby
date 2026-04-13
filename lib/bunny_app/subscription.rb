@@ -39,6 +39,36 @@ module BunnyApp
     }
     GRAPHQL
 
+    @subscription_quantity_update_mutation = <<-GRAPHQL
+    mutation subscriptionQuantityUpdate ($subscriptionId: ID!, $quantities: [SubscriptionChargeQuantityAttributes!]!, $invoiceImmediately: Boolean!, $startDate: ISO8601Date!, $name: String!, $allowQuantityLimitsOverride: Boolean!) {
+      subscriptionQuantityUpdate (subscriptionId: $subscriptionId, quantities: $quantities, invoiceImmediately: $invoiceImmediately, startDate: $startDate, name: $name, allowQuantityLimitsOverride: $allowQuantityLimitsOverride) {
+          errors
+          quote {
+            id
+            name
+          }
+      }
+    }
+    GRAPHQL
+
+    @subscription_trial_convert_mutation = <<-GRAPHQL
+    mutation subscriptionTrialConvert ($subscriptionId: ID!, $paymentId: ID!, $priceListId: ID!, $priceListCode: String!) {
+      subscriptionTrialConvert (subscriptionId: $subscriptionId, paymentId: $paymentId, priceListId: $priceListId, priceListCode: $priceListCode) {
+          errors
+          invoice {
+            amount
+            id
+            number
+            subtotal
+          }
+          subscription {
+            id
+            name
+          }
+      }
+    }
+    GRAPHQL
+
     @subscription_cancel_mutation = <<-GRAPHQL
     mutation subscriptionCancel ($ids: [ID!]!) {
       subscriptionCancel (ids: $ids) {
@@ -81,6 +111,43 @@ module BunnyApp
       raise ResponseError, res['data']['subscriptionCreate']['errors'].join(',') if res['data']['subscriptionCreate']['errors']
 
       res['data']['subscriptionCreate']['subscription']
+    end
+
+    def self.quantity_update(subscription_id:, quantities:, options: {})
+      variables = {
+        subscriptionId: subscription_id,
+        quantities:,
+        invoiceImmediately: options[:invoice_immediately] || false,
+        startDate: options[:start_date],
+        name: options[:name],
+        allowQuantityLimitsOverride: options[:allow_quantity_limits_override] || false
+      }
+
+      res = Client.new.query(@subscription_quantity_update_mutation, variables)
+      if res['data']['subscriptionQuantityUpdate']['errors']
+        raise ResponseError,
+              res['data']['subscriptionQuantityUpdate']['errors'].join(',')
+      end
+
+      res['data']['subscriptionQuantityUpdate']['quote']
+    end
+
+    def self.trial_convert(subscription_id:, price_list_id: nil, price_list_code: nil, payment_id: nil)
+      variables = {
+        subscriptionId: subscription_id
+      }
+
+      variables[:paymentId] = payment_id if payment_id
+      variables[:priceListId] = price_list_id if price_list_id
+      variables[:priceListCode] = price_list_code if price_list_code
+
+      res = Client.new.query(@subscription_trial_convert_mutation, variables)
+      if res['data']['subscriptionTrialConvert']['errors']
+        raise ResponseError,
+              res['data']['subscriptionTrialConvert']['errors'].join(',')
+      end
+
+      res['data']['subscriptionTrialConvert']
     end
 
     def self.cancel(subscription_id:)

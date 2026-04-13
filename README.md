@@ -1,182 +1,375 @@
 # bunny-ruby
 
-Ruby SDK for Bunny
+Ruby SDK for [Bunny](https://www.bunny.com) — the subscription billing and management platform.
 
 ## Installation
 
-Run `bundle add bunny_app` or add this line to your application's Gemfile:
+Add to your Gemfile:
 
 ```ruby
 gem 'bunny_app'
 ```
 
-And then execute:
+Then run:
 
 ```sh
-$ bundle
+bundle install
 ```
 
-Or install it yourself as:
+Or install directly:
 
 ```sh
-$ gem install bunny_app
+gem install bunny_app
 ```
 
-## Getting Started
+## Configuration
 
-You can use this gem to send customized graphql queries to Bunny or use the built in convience methods.
+### With client credentials (recommended)
 
-First configure the Bunny client.
+Using `client_id` and `client_secret` enables automatic token refresh when the access token expires.
 
 ```ruby
 require 'bunny_app'
 
-# We recommend using the client_id/secret of your Bunny client app
-# this will enable automatic retries when the access token expires
 BunnyApp.config do |c|
-  c.client_id = 'xxx'
-  c.client_secret = 'xxx'
-  c.scope = 'standard:read standard:write'
-  c.base_uri = 'https://<subdomain>.bunny.com'
-end
-
-# Alternately you can generate the access token outside of this sdk
-# be aware that if your access_token expires an exception will be raised
-BunnyApp.config do |c|
-  c.access_token = 'xxx'
-  c.base_uri = 'https://<subdomain>.bunny.com'
+  c.client_id     = 'your-client-id'
+  c.client_secret = 'your-client-secret'
+  c.scope         = 'standard:read standard:write'
+  c.base_uri      = 'https://<subdomain>.bunny.com'
 end
 ```
 
-> Remember! Don't commit secrets to source control!
+### With a pre-existing access token
 
-### Generate rails config
+If you manage token lifecycle yourself, you can pass the token directly. An `AuthorizationError` will be raised if the token expires.
 
-Create a config file at `config/initializers/bunny_app.rb`
+```ruby
+BunnyApp.config do |c|
+  c.access_token = 'your-access-token'
+  c.base_uri     = 'https://<subdomain>.bunny.com'
+end
+```
+
+> **Never commit secrets to source control.** Load credentials from environment variables or a secret store.
+
+### Rails initializer
+
+Generate a config file at `config/initializers/bunny_app.rb`:
 
 ```sh
-> bin/rails g bunny_app:install
+bin/rails g bunny_app:install
 ```
+
+This creates a template that reads credentials from environment variables:
+
+```ruby
+BunnyApp.config do |c|
+  c.client_id     = ENV['BUNNY_APP_CLIENT_ID']
+  c.client_secret = ENV['BUNNY_APP_CLIENT_SECRET']
+  c.scope         = ENV['BUNNY_APP_SCOPE']
+  c.base_uri      = 'https://<subdomain>.bunny.com'
+end
+```
+
+---
+
+## Subscriptions
 
 ### Create a subscription
 
+Create a new subscription for an account. You can create the account inline or attach to an existing account by ID.
+
 ```ruby
-response = BunnyApp::Subscription.create(
+# Create with a new account
+subscription = BunnyApp::Subscription.create(
   price_list_code: 'starter',
   options: {
-    account_name: "Superdesk",
-    first_name: "Meg",
-    last_name: "La Don",
-    email: "meg@example.com",
-    trial: true,
-    tenant_code: "123456",
-    tenant_name: "Superdesk"
+    account_name: 'Acme Corp',
+    first_name:   'Jane',
+    last_name:    'Smith',
+    email:        'jane@acme.com',
+    trial:        true,
+    tenant_code:  'acme-123',
+    tenant_name:  'Acme Corp'
+  }
+)
+
+# Create against an existing account
+subscription = BunnyApp::Subscription.create(
+  price_list_code: 'starter',
+  options: {
+    account_id:  '456',
+    tenant_code: 'acme-123',
+    tenant_name: 'Acme Corp'
   }
 )
 ```
 
-### Get a portal session token for use with Bunny.js
+Returns a hash containing the created subscription, including `id`, `state`, `trialStartDate`, `trialEndDate`, `plan`, `priceList`, and `tenant`.
+
+### Update subscription quantities
+
+Adjust the quantities for one or more charges on an existing subscription.
 
 ```ruby
-response = BunnyApp::PortalSession.create(
-  tenant_code: "123456"
+quote = BunnyApp::Subscription.quantity_update(
+  subscription_id: '456123',
+  quantities: [
+    { code: 'users', quantity: 25 }
+  ],
+  options: {
+    invoice_immediately:          true,
+    start_date:                   '2024-06-01',
+    name:                         'Add users — June',
+    allow_quantity_limits_override: false
+  }
 )
 ```
 
-### Track feature usage
+Returns a `quote` hash with `id` and `name`.
 
-If you have usage based billing or just want to track feature usage then use this method.
+### Convert a trial to paid
 
 ```ruby
-# Usage is tracked as if it just happened
-response = BunnyApp::FeatureUsage.create(
-  quantity: 5, feature_code: 'products', tenant_code: '2')
+# Convert using a price list code
+result = BunnyApp::Subscription.trial_convert(
+  subscription_id: '456123',
+  price_list_code: 'starter'
+)
 
-# Usage is tracked using the date supplied
-response = BunnyApp::FeatureUsage.create(
-  quantity: 5, feature_code: 'products', tenant_code: '2', usage_at: '2022-03-10')
+# Convert using a price list ID and payment method
+result = BunnyApp::Subscription.trial_convert(
+  subscription_id: '456123',
+  price_list_id:   '789',
+  payment_id:      '101112'
+)
 ```
 
-### Custom queries & mutations
+Returns a hash containing `invoice` (with `amount`, `id`, `number`, `subtotal`) and `subscription` (with `id`, `name`).
 
-Alternately you can build and send your own custom graphql queries or mutations
+### Cancel a subscription
 
 ```ruby
-query = <<-'GRAPHQL'
-mutation featureUsageCreate ($attributes: FeatureUsageAttributes!) {
-    featureUsageCreate (attributes: $attributes) {
-        errors
-        featureUsage {
-            id
-            quantity
-            usageAt
-            tenant {
-                id
-                code
-                name
-            }
-            feature {
-                id
-                code
-                name
-            }
-        }
+BunnyApp::Subscription.cancel(subscription_id: '456123')
+# => true
+```
+
+---
+
+## Tenants
+
+### Create a tenant
+
+```ruby
+tenant = BunnyApp::Tenant.create(
+  name:          'Acme Corp',
+  code:          'acme-123',
+  account_id:    '456',
+  platform_code: 'main'   # optional, defaults to 'main'
+)
+```
+
+Returns a hash with `id`, `code`, `name`, and `platform`.
+
+### Find a tenant by code
+
+```ruby
+tenant = BunnyApp::Tenant.find_by(code: 'acme-123')
+# => { "id" => "1", "code" => "acme-123", "name" => "Acme Corp",
+#      "subdomain" => "acme", "account" => { "id" => "456", ... } }
+```
+
+Returns `nil` if no tenant is found.
+
+---
+
+## Tenant Metrics
+
+Push usage and engagement metrics to Bunny for a tenant. Useful for health scoring and churn signals.
+
+```ruby
+BunnyApp::TenantMetrics.update(
+  code:       'acme-123',
+  last_login: '2024-06-01T12:00:00Z',
+  user_count: 42,
+  utilization_metrics: {
+    projects_created: 10,
+    exports_run:      3
+  }
+)
+# => true
+```
+
+`utilization_metrics` is optional and accepts any key/value pairs you want to track.
+
+---
+
+## Feature Usage
+
+Track usage of individual features for usage-based billing or analytics.
+
+```ruby
+# Track usage now
+usage = BunnyApp::FeatureUsage.create(
+  quantity:        5,
+  feature_code:    'api_calls',
+  subscription_id: '456123'
+)
+
+# Track usage for a specific date
+usage = BunnyApp::FeatureUsage.create(
+  quantity:        5,
+  feature_code:    'api_calls',
+  subscription_id: '456123',
+  usage_at:        '2024-03-10'
+)
+```
+
+Returns a hash with `id`, `quantity`, `usageAt`, `subscription`, and `feature`.
+
+---
+
+## Portal Sessions
+
+Generate a short-lived token to embed the Bunny billing portal in your app using Bunny.js.
+
+```ruby
+# Basic session
+token = BunnyApp::PortalSession.create(tenant_code: 'acme-123')
+
+# With a return URL and custom expiry (in hours, default: 24)
+token = BunnyApp::PortalSession.create(
+  tenant_code:  'acme-123',
+  return_url:   'https://yourapp.com/billing',
+  expiry_hours: 4
+)
+```
+
+Returns the session token string.
+
+---
+
+## Platforms
+
+Platforms allow you to group tenants. Create a platform before assigning tenants to it.
+
+```ruby
+platform = BunnyApp::Platform.create(
+  name: 'My SaaS Platform',
+  code: 'my-saas'
+)
+# => { "id" => "1", "name" => "My SaaS Platform", "code" => "my-saas" }
+```
+
+---
+
+## Webhooks
+
+Bunny sends webhooks for events like subscription state changes. Verify the `x-bunny-signature` header to confirm the payload is authentic.
+
+```ruby
+payload    = request.raw_post
+signature  = request.headers['x-bunny-signature']
+signing_key = ENV['BUNNY_WEBHOOK_SECRET']
+
+if BunnyApp::Webhook.verify(signature, payload, signing_key)
+  # payload is authentic — process the event
+  event = JSON.parse(payload)
+  case event['type']
+  when 'SubscriptionProvisioningChange'
+    # handle provisioning change
+  end
+else
+  head :unauthorized
+end
+```
+
+---
+
+## Custom GraphQL Queries
+
+You can send any GraphQL query or mutation directly if you need fields not covered by the convenience methods.
+
+### Synchronous query
+
+```ruby
+query = <<~GRAPHQL
+  query GetTenant($code: String!) {
+    tenant(code: $code) {
+      id
+      name
+      account {
+        id
+        name
+      }
     }
-}
+  }
 GRAPHQL
 
-variables = {
-  attributes: {
-    quantity: 1,
-    usageAt: "2022-03-10",
-    tenantCode: "123456",
-    featureCode: "users"
-  }
-}
-
-response = BunnyApp.query(query, variables)
+response = BunnyApp.query(query, { code: 'acme-123' })
+tenant = response['data']['tenant']
 ```
 
-### Verify webhook signature
+### Asynchronous query (fire-and-forget)
 
-Bunny can send webhooks for key actions like a subscription change. When you get a webhook from Bunny you should verify the signature that is supplied in the `x-bunny-signature` header matches the payload.
+Runs the request in a background thread. Useful for non-critical tracking calls where you don't want to block the request cycle.
 
 ```ruby
-payload = '{"type":"SubscriptionProvisioningChange","payload":{"subscription":{"id":27,"state":"trial","trial_start_date":"2022-06-04","trial_end_date":"2022-06-18","start_date":null,"end_date":null,"auto_renew":false,"account":{"id":33,"name":"Ondricka, Flatley and Kessler"},"tenant":null,"product":{"code":"stealth","name":"Stealth","description":null,"sku":null},"features":[{"code":"users","quantity":1},{"code":"crm","quantity":null}]}}}'
-
-BunnyApp::Webhook.verify("8bd5aa9c6a96fbce9fc3065af6e9871ac19a1d0a", payload, "secret-key")
+BunnyApp.query_async(query, variables)
 ```
+
+---
+
+## Error Handling
+
+All convenience methods raise on error. Two exception classes are provided:
+
+| Exception | When raised |
+|---|---|
+| `BunnyApp::AuthorizationError` | Invalid or expired credentials |
+| `BunnyApp::ResponseError` | API returned errors in the response body |
+
+```ruby
+begin
+  BunnyApp::Subscription.cancel(subscription_id: '456123')
+rescue BunnyApp::AuthorizationError => e
+  # Re-authenticate or alert
+  Rails.logger.error "Bunny auth failed: #{e.message}"
+rescue BunnyApp::ResponseError => e
+  # The API rejected the request
+  Rails.logger.error "Bunny error: #{e.message}"
+end
+```
+
+---
 
 ## Requirements
 
-This gem requires Ruby 2.5+
+Ruby 2.5+
+
+---
 
 ## Development
 
-Run `bundle install` to install dependencies.
-
-Run `bundle exec rake spec` to run the tests.
-
-You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-Set IGNORE_SSL when running locally to ignore ssl warnings.
-
 ```sh
-> IGNORE_SSL=true bin/console
+bundle install          # install dependencies
+bundle exec rake spec   # run tests
+bin/console             # interactive console
 ```
 
-## Publish to Ruby gems
+Set `IGNORE_SSL=true` when running locally to suppress SSL warnings:
 
-Update `version.rb` with a new version number then build the gem
+```sh
+IGNORE_SSL=true bin/console
+```
+
+## Publishing
+
+Update `lib/bunny_app/version.rb`, then:
 
 ```sh
 gem build
-```
-
-Then publish using the new build number
-
-```sh
 gem push bunny_app-x.x.x.gem
 ```
 
-The rubygems account for publishing is protected by MFA and currently managed by @richet
+The RubyGems account is protected by MFA and managed by @richet.
